@@ -9,14 +9,9 @@
 </head>
 <body>
     <header>
-        <img src="img/almingo_logo.png" alt="logo">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="articulos.php">Articulos</a></li>
-            <li><a href="insertarArticulos.html">Subir Articulos</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="registro.html">Registro</a></li>
-        </ul>
+    <?php
+        include_once 'menu.php';
+    ?>
     </header>
     <article>
         <section>

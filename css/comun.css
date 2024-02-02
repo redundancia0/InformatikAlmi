@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Oxygen&family=Roboto+Slab:wght@300&family=Rubik:wght@300&family=Skranji&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-family: 'Rubik', sans-serif;
+}
+body {
+    overflow-x: hidden;
+}
+
+header {
+    background: linear-gradient(lightgray, white);
+}
+
+header img {
+    width: 200px;
+}
+
+header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+header ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+header ul li:hover {
+    background-color: lightblue;
+}
+
+header ul li a:hover {
+    color: red;
+}
+
+footer {
+    background: linear-gradient(lightgray, white);
+    height: 100px;
+    padding: 5px;
+    text-align: center;
+}
+
+footer img {
+    margin: 20px;
+}
