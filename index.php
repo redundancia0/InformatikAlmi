@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/comun.css">
-    <title>InformatikAlmi</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <title>Inicio</title>
 </head>
 <body>
     <header>
@@ -13,22 +14,22 @@
         include_once 'menu.php';
     ?>
     </header>
-    <article>
-        <section>
-            <a href=""><h1>Ryzen 5 2600</h1></a>
-            <img src="img/ryzen5.jpg" alt="fotoArticulo">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad porro aperiam officiis beatae, labore accusantium culpa dolorem voluptates amet, quo ipsum modi. In libero et minus reiciendis, veritatis minima iure.</p>
-        </section>
-        <section>
-            <a href=""><h1>Articulo2</h1></a>
-            <img src="img/ryzen5.jpg" alt="fotoArticulo">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad porro aperiam officiis beatae, labore accusantium culpa dolorem voluptates amet, quo ipsum modi. In libero et minus reiciendis, veritatis minima iure.</p>
-        </section>
-        <section>
-            <a href=""><h1>Articulo3</h1></a>
-            <img src="img/ryzen5.jpg" alt="fotoArticulo">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad porro aperiam officiis beatae, labore accusantium culpa dolorem voluptates amet, quo ipsum modi. In libero et minus reiciendis, veritatis minima iure.</p>
-        </section>
+        <?php
+    include_once 'bbdd.php';
+    $articulos = get_articulos();
+    echo '<br>';
+    echo '<h1 class="titulo">Articulos Iniciales</h1>';
+    foreach ($articulos as $articulo) {
+        echo '<article>';
+        echo '<section>';
+        echo '<a href="id_articulos.php?id_articulos='.$articulo["id_articulos"].'"><h2>' . $articulo['nombre'] . '</h2></a>';
+        echo '<br>';
+        echo '<img src="' . $articulo['imagen'] . '" alt="fotoNoticia"><br>';
+        echo '<span>'.$articulo['precio'].'€</span>';
+        echo '</section>';
+        echo '</article>';
+    }
+?>
     </article>
     <footer>
         <a href="https://www.instagram.com/"><img src="img/insta.png" alt="fotoInsta"></a>

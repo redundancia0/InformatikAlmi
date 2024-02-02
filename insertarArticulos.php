@@ -5,20 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/subirArticulos.css">
     <link rel="stylesheet" href="css/comun.css">
-    <title>InformatikAlmi</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <title>Subir Articulos</title>
 </head>
 <body>
     <header>
-        <img src="img/almingo_logo.png" alt="logo">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="registro.html">Registro</a></li>
-        </ul>
+     <?php
+        include_once 'menu.php';
+    ?>
     </header>
-    <h2>Subir Articulos</h2>
-    <form method="post" action="login.php" enctype="multipart/form-data">
-        <img class="formLogo" src="img/almingo_logo.png">
+    <h1>Subir Articulos</h1>
+    <form method="post" action="articulosVerificar.php" enctype="multipart/form-data">
+        <img class="formLogo" src="img/logo.png">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" required placeholder="Nombre del articulo">
         <br>

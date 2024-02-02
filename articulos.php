@@ -5,32 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/comun.css">
-    <title>InformatikAlmi</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <title>Articulos</title>
 </head>
 <body>
     <header>
-        <img src="img/almingo_logo.png" alt="logo">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="articulos.php">Articulos</a></li>
-            <li><a href="insertarArticulos.html">Subir Articulos</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="registro.html">Registro</a></li>
-        </ul>
+    <?php
+        include_once 'menu.php';
+    ?>
     </header>
     <article>
     <?php
     include_once 'bbdd.php';
-    if(isset($_GET['idArticulo'])) {
-    $idArticulo = $_GET['idArticulo'];
-
-    // $articulo = get_articulos_id($idArticulo);
+    $articulos = get_articulos();
+    echo '<br>';
+    echo '<h1 class="titulo">Articulos</h1>';
+    foreach ($articulos as $articulo) {
+        echo '<div class="container">';
         echo '<article>';
         echo '<section>';
-        echo '<h1>' . $articulo['titulo'] . '</h1>';
+        echo '<a href="noticiacompleta.php?idNoticias='.$articulo["id_articulos"].'"><h2>' . $articulo['nombre'] . '</h2></a>';
         echo '<br>';
-        echo '<img src="' . $articulo['imagen'] . '" alt="fotoArticulo"><br>';
-        echo '<p>' . $articulo['texto'] . '</p>';
+        echo '<img src="' . $articulo['imagen'] . '" alt="fotoNoticia"><br>';
+        echo '<span>'.$articulo['precio'].'€</span>';
         echo '</section>';
         echo '</article>';
     }

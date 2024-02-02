@@ -1,19 +1,19 @@
 <header>
-        <img src="img/almingo_logo.png" alt="logo">
+        <img src="img/logo.png" alt="logo">
         <ul>
             <li><a href="index.php">Inicio</a></li>
-        </ul>
-       <!-- <?php
+            <li><a href="articulos.php">Articulos</a></li>
+            <li><a href="insertarArticulos.php">Subir Articulos</a></li>
+        <?php
                 session_start();
-                $user = $_SESSION["user"];
-                if(isset($user) != true)
-                {
-                    echo "<a class='enlacemenu' href='registro.html'>Registro</a>";
-                    echo "<a class='enlacemenu' href='login.html'>Login</a>";
-                } else
-                {
-                    echo "<p>".$user."</p>";
-                    echo "<a class='enlaceMenu' href='logout.php'>Salir</a>";
+                if (isset($_SESSION["user"])) {
+                    $user = $_SESSION["user"];
+                    echo "<li><p>".$user."</p></li>";
+                    echo "<li><a class='enlaceMenu' href='logout.php'>Salir</a></li>";
+                } else {
+                    echo "<li><a class='enlacemenu' href='registro.php'>Registro</a></li>";
+                    echo "<li><a class='enlacemenu' href='login.php'>Login</a></li>";
                 }
-            ?> -->
+                ?>
+             </ul>
 </header>

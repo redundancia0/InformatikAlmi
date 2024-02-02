@@ -1,7 +1,7 @@
 <?php
     function connect_database()
     {
-        $mysqli = new mysqli("127.0.0.1", "admin", "Almi123", "informatikAlmi");
+        $mysqli = new mysqli("127.0.0.1", "root", "", "informatikAlmi");
         if($mysqli -> connect_errno)
         {
             echo "Fallo en la conexión: ".$mysqli->connect_errno;

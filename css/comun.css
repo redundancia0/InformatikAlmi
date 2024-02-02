@@ -6,12 +6,19 @@
     color: black;
     font-family: 'Rubik', sans-serif;
 }
+
 body {
     overflow-x: hidden;
+    background-color: lightskyblue;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 header {
     background: linear-gradient(lightgray, white);
+    text-align: center;
 }
 
 header img {
@@ -23,6 +30,7 @@ header ul {
     padding: 0;
     margin: 0;
     display: flex;
+    justify-content: center;
 }
 
 header ul li {
@@ -45,6 +53,11 @@ header ul li:hover {
 
 header ul li a:hover {
     color: red;
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
 }
 
 footer {

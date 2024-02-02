@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/comun.css">
-    <title>InformatikAlmi | Login</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <title>Registro</title>
 </head>
 <body>
     <header>
-        <img src="img/almingo_logo.png" alt="logo">
-        <ul>
-            <li><a href="index.php">Inicio</a></li>
-            <li><a href="articulos">Articulos</a></li>
-            <li><a href="insertarArticulos.html">Subir Articulos</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="registro.html">Registro</a></li>
-        </ul>
+    <?php
+        include_once 'menu.php';
+    ?>
     </header>
-    <h2>Iniciar Sesion</h2>
-    <form method="post" action="login.php">
-        <img class="formLogo" src="img/almingo_logo.png">
+    <h1>Registro</h1>
+    <form method="post" action="loginVerificar.php">
+        <img class="formLogo" src="img/logo.png">
         <label for="user">Usuario</label>
         <input type="text" id="user" name="user" required placeholder="Introduzca su usuario">
         <br>
         <label for="password">Contraseña</label>
         <input type="password" id="password" name="password" required placeholder="Introduzca su contraseña">
+        <br>
+        <label for="correo">Correo</label>
+        <input type="email" name="correo" id="correo" requiered placeholder="Introduzca su correo">
+        <br>
+        <label for="fecha_nac">Fecha Nacimiento</label>
+        <input type="date" name="fecha_nac" id="fecha_nac">
         <br>
         <input type="submit" id="singup"></input>
     </form>
