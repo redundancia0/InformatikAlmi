@@ -17,6 +17,22 @@
     <h1>Subir Articulos</h1>
     <form method="post" action="articulosVerificar.php" enctype="multipart/form-data">
         <img class="formLogo" src="img/logo.png">
+        <select id="categoria" name="categoria">
+                <?php
+                    session_start();
+                    include_once 'bbdd.php';
+                    $user = $_SESSION["user"];
+                    if(isset($user) != true)
+                    {
+                        header('location: login.php');
+                    }
+                    $categorias = get_categorias();
+                    for($i = 0; $i < sizeof($categorias); $i++) {
+                        echo "<option value='".$categorias[$i]["id_categoria"]."'>".$categorias[$i]["nombre_cat"]."</option>";
+                    }
+                ?>
+            </select>
+            <br>
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" required placeholder="Nombre del articulo">
         <br>

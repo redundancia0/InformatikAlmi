@@ -14,21 +14,25 @@
         include_once 'menu.php';
     ?>
     </header>
-        <?php
+    <?php
     include_once 'bbdd.php';
     $articulos = get_articulos();
     echo '<br>';
+    echo '<input type="search" name="search" id="search">';
+    echo '<br>';
     echo '<h1 class="titulo">Articulos Iniciales</h1>';
-    foreach ($articulos as $articulo) {
+    echo '<div class="container">';
+    for ($x=0;$x<3;$x++) {
         echo '<article>';
         echo '<section>';
-        echo '<a href="id_articulos.php?id_articulos='.$articulo["id_articulos"].'"><h2>' . $articulo['nombre'] . '</h2></a>';
+        echo '<a href="id_articulos.php?id_articulos='.$articulos[$x]["id_articulos"].'"><h2>' . $articulos[$x]['nombre'] . '</h2></a>';
         echo '<br>';
-        echo '<img src="' . $articulo['imagen'] . '" alt="fotoNoticia"><br>';
-        echo '<span>'.$articulo['precio'].'€</span>';
+        echo '<img src="' . $articulos[$x]['imagen'] . '" alt="fotoNoticia"><br>';
+        echo '<span>'.$articulos[$x]['precio'].'€</span>';
         echo '</section>';
         echo '</article>';
     }
+    echo "</div>";
 ?>
     </article>
     <footer>

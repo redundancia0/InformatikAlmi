@@ -9,7 +9,7 @@
 
 body {
     overflow-x: hidden;
-    background-color: lightskyblue;
+    background-color: white;
     margin: 0;
     padding: 0;
     align-items: center;
@@ -17,7 +17,7 @@ body {
 }
 
 header {
-    background: linear-gradient(lightgray, white);
+    background: linear-gradient(360deg, white, #5271ff);
     text-align: center;
 }
 
@@ -46,13 +46,13 @@ header ul li a {
     padding: 10px;
     border-radius: 5px;
 }
-
+/* 
 header ul li:hover {
-    background-color: lightblue;
-}
+    background-color: white;
+} */
 
 header ul li a:hover {
-    color: red;
+    color: #5271ff;
 }
 
 h1 {
@@ -60,11 +60,21 @@ h1 {
     font-size: 30px;
 }
 
+p {
+    -webkit-text-stroke: 1.5px black;
+    background-color: #5271ff;
+    padding: 10px;
+    border-radius: 15px;
+}
+
 footer {
-    background: linear-gradient(lightgray, white);
+    background: linear-gradient(white, #5271ff);
     height: 100px;
     padding: 5px;
     text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 footer img {

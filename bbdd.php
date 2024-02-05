@@ -8,6 +8,42 @@
         }
         return $mysqli;
     }
+    function get_categorias() {
+
+        $mysqli = connect_database();
+        
+        $sql = "SELECT * FROM categorias";
+        $sentencia = $mysqli->prepare($sql);
+        if(!$sentencia)
+        {
+            echo "Fallo en la preparación de la sentencia: ".$mysqli->errno;
+        }
+        
+        $ejecucion = $sentencia->execute();
+        if(!$ejecucion)
+        {
+            echo "Fallo en la ejecucion: ".$mysqli->errno;
+        }
+        
+        $categorias = array();
+
+        $id_categoria = -1;
+        $nombre_cat = "";
+        
+        $vincular = $sentencia->bind_result($id_categoria, $nombre_cat);
+        
+        if(!$vincular)
+        {
+            echo "Fallo al vincular la sentencia: ".$mysqli->errno;
+        }
+        while($sentencia->fetch())
+        {
+            $categoria = array('id_categoria' => $id_categoria, 'nombre_cat' => $nombre_cat);
+            $categorias[] = $categoria;
+        }
+        $mysqli->close();
+        return $categorias;
+    }
     function get_articulos()
     {
         $mysqli = connect_database();
@@ -139,12 +175,43 @@
         return $result;
     }
 
+    function registro($nombre, $apellido1, $apellido2, $dni, $direccion, $correo, $telefono, $usuario, $password)
+    {
+        $mysqli = connect_database();
+
+        $sql = "INSERT INTO registro(nombre, apellido1, apellido2, dni, direccion, correo, telefono,usuario, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+        $sentencia = $mysqli->prepare($sql);
+        if(!$sentencia)
+        {
+            echo "Fallo en la preparación de la sentencia".$mysqli->errno;
+        }
+
+        $asignar = $sentencia->bind_param("sssssssss", $nombre, $apellido1, $apellido2, $dni, $direccion, $correo, $telefono, $usuario, $password);
+        if(!$asignar)
+        {
+            echo "Fallo en la asignación ".$mysqli->errno;
+        }
+
+        $ejecucion = $sentencia->execute();
+        
+        if(!$ejecucion)
+        {
+            echo "Fallo en la ejecución ".$mysqli->errno;
+            return false;
+        } else {
+            return true;
+        }
+
+        // $mysqli->close();
+    }
+
     function insert_articulos($nombre, $imagen, $descripcion, $precio, $id_usuario)
     {
         
         $mysqli = connect_database();
         
-        $sql = "INSERT INTO articulos(nombre, imagen, descripcion, precio, id_usuario) 
+        $sql = "INSERT INTO productos(id_producto, nombre, precio, stock, imagen, descripcion) 
                         VALUES (?, ?, ?, ?, ?)";
         $sentencia = $mysqli->prepare($sql);
         if(!$sentencia)

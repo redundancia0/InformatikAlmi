@@ -10,6 +10,6 @@
         header("location: index.php");
     } else
     {
-        header("location: login.html");
+        header("location: index.php");
     }
 ?>

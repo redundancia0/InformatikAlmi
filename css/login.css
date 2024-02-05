@@ -3,7 +3,7 @@ h1 {
     margin: 10px auto;
 }
 form {
-    background-color: white;
+    background: radial-gradient(white, #5271ff);
     margin: 10px auto;
     padding: 20px;
     border-radius: 10px;
@@ -26,4 +26,9 @@ form input {
 
 form label {
     text-align: center;
+}
+
+textarea {
+    max-height: 200px;
+    resize: vertical;
 }

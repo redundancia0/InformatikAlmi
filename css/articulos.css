@@ -1,10 +1,11 @@
 .container {
     display: flex;
+    flex-wrap: wrap;
 }
 
 section {
-    border-radius: 50px;
-    background: radial-gradient(white, #5271ff );
+    border-radius: 10px;
+    background-color: white;
     margin: 20px;
     padding: 20px;
     width: 400px;
@@ -30,7 +31,7 @@ section img {
 
 span {
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 h1 {

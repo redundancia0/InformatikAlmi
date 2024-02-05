@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/articulos.css">
     <link rel="stylesheet" href="css/comun.css">
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
     <title>Articulos</title>
@@ -19,18 +19,19 @@
     include_once 'bbdd.php';
     $articulos = get_articulos();
     echo '<br>';
-    echo '<h1 class="titulo">Articulos</h1>';
+    echo '<h1 class="titulo">Articulos Iniciales</h1>';
+    echo '<div class="container">';
     foreach ($articulos as $articulo) {
-        echo '<div class="container">';
         echo '<article>';
         echo '<section>';
-        echo '<a href="noticiacompleta.php?idNoticias='.$articulo["id_articulos"].'"><h2>' . $articulo['nombre'] . '</h2></a>';
+        echo '<a href="id_articulos.php?id_articulos='.$articulo["id_articulos"].'"><h2>' . $articulo['nombre'] . '</h2></a>';
         echo '<br>';
         echo '<img src="' . $articulo['imagen'] . '" alt="fotoNoticia"><br>';
         echo '<span>'.$articulo['precio'].'€</span>';
         echo '</section>';
         echo '</article>';
     }
+    echo "</div>";
 ?>
     </article>
     <footer>
