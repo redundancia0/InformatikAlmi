@@ -1,10 +1,10 @@
 section {
     border-radius: 10px;
-    background-color: white;
     margin: 10px auto;
     padding: 10px auto;
     width: 50%;
     text-align: center;
+    background: radial-gradient(white, #5271ff);
 }
 
 section h1 {

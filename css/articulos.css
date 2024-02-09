@@ -5,7 +5,7 @@
 
 section {
     border-radius: 10px;
-    background-color: white;
+    background: radial-gradient(white, #5271ff);
     margin: 20px;
     padding: 20px;
     width: 400px;
@@ -36,4 +36,33 @@ span {
 
 h1 {
     text-align: center;
+}
+
+
+#toggleSearch {
+    margin: 20px;
+    cursor: pointer;
+}
+
+#searchInput {
+        height: 25px;
+}
+
+#toggleSearch img{
+    width: 30px;
+}
+
+#searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#imageContainer {
+    margin-right: 10px; 
+}
+
+#submit {
+    width: 50px;
+    height: 25px;
 }

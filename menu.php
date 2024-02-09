@@ -13,14 +13,15 @@
             <li><a href="categorias.php">Articulos</a></li>
             <li><a href="insertarArticulos.php">Subir Articulos</a></li>
         <?php
+            include_once 'bbdd.php';
                 session_start();
-                if (isset($_SESSION["user"])) {
-                    $user = $_SESSION["user"];
-                    echo "<li><p>".$user."</p></li>";
+                if (isset($_SESSION["USUARIOPROVEEDOR"])) {
+                    $user = $_SESSION["USUARIOPROVEEDOR"];
+                    echo "<li><p class='user'>".$user."</p></li>";
                     echo "<li><a href='logout.php'>Salir</a></li>";
+
                 } else {
-                    echo "<li><a href='registro.php'>Registro</a></li>";
-                    echo "<li><a href='login.php'>Login</a></li>";
+                    echo "<li><a href='login.php'>Acceso</a></li>";
                 }
                 ?>
              </ul>

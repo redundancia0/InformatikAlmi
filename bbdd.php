@@ -1,238 +1,191 @@
 <?php
-    function connect_database()
-    {
-        $mysqli = new mysqli("127.0.0.1", "root", "", "informatikAlmi");
-        if($mysqli -> connect_errno)
-        {
-            echo "Fallo en la conexión: ".$mysqli->connect_errno;
-        }
-        return $mysqli;
-    }
-    function get_categorias() {
+function conectarOracle() {
+    $host = "54.164.171.161";
+    $puerto = 1521;
+    $sid = "ORCLCDB";
+    $usuario = "informatikalmi";
+    $contraseña = "Almi12345";
+    $oracle_db = "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $puerto)))(CONNECT_DATA=(SID=$sid)))";
+    $conn = oci_connect($usuario, $contraseña, $oracle_db);
 
-        $mysqli = connect_database();
-        
-        $sql = "SELECT * FROM categorias";
-        $sentencia = $mysqli->prepare($sql);
-        if(!$sentencia)
-        {
-            echo "Fallo en la preparación de la sentencia: ".$mysqli->errno;
-        }
-        
-        $ejecucion = $sentencia->execute();
-        if(!$ejecucion)
-        {
-            echo "Fallo en la ejecucion: ".$mysqli->errno;
-        }
-        
-        $categorias = array();
-
-        $id_categoria = -1;
-        $nombre_cat = "";
-        
-        $vincular = $sentencia->bind_result($id_categoria, $nombre_cat);
-        
-        if(!$vincular)
-        {
-            echo "Fallo al vincular la sentencia: ".$mysqli->errno;
-        }
-        while($sentencia->fetch())
-        {
-            $categoria = array('id_categoria' => $id_categoria, 'nombre_cat' => $nombre_cat);
-            $categorias[] = $categoria;
-        }
-        $mysqli->close();
-        return $categorias;
+    if (!$conn) {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        return false;
     }
-    function get_articulos()
-    {
-        $mysqli = connect_database();
-        
-        $sql = "SELECT * FROM articulos";
-        $sentencia = $mysqli->prepare($sql);
-        if(!$sentencia)
-        {
-            echo "Fallo en la preparación de la sentencia: ".$mysqli->errno;
-        }
-        
-        $ejecucion = $sentencia->execute();
-        if(!$ejecucion)
-        {
-            echo "Fallo en la ejecucion: ".$mysqli->errno;
-        }
-        
-        $articulos = array();
+    return $conn;
+}
 
-        $id_articulos = -1;
-        $nombre = "";
-        $imagen = "";
-        $descripcion = "";
-        $precio = -1;
-        $id_usuario = -1;
-        $vincular = $sentencia->bind_result($id_articulos, $nombre, $imagen, $descripcion, $precio, $id_usuario);
-        
-        if(!$vincular)
-        {
-            echo "Fallo al vincular la sentencia: ".$mysqli->errno;
-        }
-        while($sentencia->fetch())
-        {
-            $noticia = array('id_articulos' => $id_articulos, 'nombre' => $nombre, 'imagen' => $imagen,
-                            'descripcion' => $descripcion, 'precio' => $precio);
-            $articulos[] = $noticia;
-        }
-        $mysqli->close();
-        return $articulos;
+function selectProductos() {
+    $conn = conectarOracle();
+
+    if (!$conn) {
+        return false;
     }
+
+    $query = "SELECT * FROM productos";
+    $stid = oci_parse($conn, $query);
+    oci_execute($stid);
+
+    $resultados = array();
+    while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        $resultados[] = $row;
+    }
+
+    oci_close($conn);
+
+    return $resultados;
+}
+
+// // $productos = selectProductos();
+
+// if ($productos !== false) {
+//     print_r($productos);
+// } else {
+//     echo "No se pudo conectar a la base de datos.";
+// }
+
+function login($usuarioProveedor, $passwordProveedor) {
+    $conn = conectarOracle();
+
+    $query = "SELECT id_proveedor FROM proveedores WHERE usuarioproveedor = :usuarioproveedor 
+        AND passwordproveedor = :passwordproveedor";
+
+    $stmt = oci_parse($conn, $query);
+    if (!$stmt) {
+        $e = oci_error($conn);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    oci_bind_by_name($stmt, ':usuarioproveedor', $usuarioProveedor);
+    oci_bind_by_name($stmt, ':passwordproveedor', $passwordProveedor);
+
+    oci_execute($stmt);
+
+    $id_cliente = -1;
+    oci_bind_by_name($stmt, ':id_cliente', $id_cliente);
+
+    $result = false;
+    if (oci_fetch($stmt)) {
+        $result = $id_cliente;
+    }
+
+    oci_free_statement($stmt);
+    oci_close($conn);
+
+    return $result;
+}
+function insert_producto($nombre, $precio, $stock, $imagen, $descripcion, $memoria, $velocidad, $tipo_memoria, $nucleos, $tipo_disco, $memoria_ram, $tamano, $peso, $tipo_liquido, $tipo_conexion, $senal_ruido, $potencia) {
+
+    $conn = conectarOracle();
     
-
-    function get_articulos_id($id_articulos)
-    {
-        
-        $mysqli = connect_database();
-        
-        $sql = "SELECT * FROM articulos WHERE id_articulos = ?";
-        $sentencia = $mysqli->prepare($sql);
-        if(!$sentencia)
-        {
-            echo "Fallo en la preparación de la sentencia: ".$mysqli->errno;
-        }
-
-        $asignar = $sentencia->bind_param("i",$id_articulos);
-        if(!$asignar)
-        {
-            echo "Fallo en la asignacion de parametros ".$mysqli->errno;
-        }
-        
-        $ejecucion = $sentencia->execute();
-        if(!$ejecucion)
-        {
-            echo "Fallo en la ejecucion: ".$mysqli->errno;
-        }
-        
-        $articulo = array();
-
-        $id_articulos = -1;
-        $nombre = "";
-        $imagen = "";
-        $descripcion = "";
-        $precio = -1;
-        $id_usuario = -1;
-        $vincular = $sentencia->bind_result($id_articulos, $nombre, $imagen, $descripcion, $precio, $id_usuario);
-        
-        if(!$vincular)
-        {
-            echo "Fallo al vincular la sentencia: ".$mysqli->errno;
-        }
-        if($sentencia->fetch())
-        {
-            $articulo = array('id_articulos' => $id_articulos, 'nombre' => $nombre, 'imagen' => $imagen,
-                            'descripcion' => $descripcion, 'precio' => $precio);
-        }
-        $mysqli->close();
-        return $articulo;
+    if (!$conn) {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
     }
+
+    // Preparar la llamada al procedimiento
+    $stmt = oci_parse($conn, 'BEGIN agregar_producto(:p_nombre, :p_precio, :p_stock, :p_imagen, :p_descripcion,:p_memoria, :p_velocidad, :p_tipo_memoria, :p_nucleos, :p_tipo_disco, :p_memoria_ram, :p_tamano, :p_peso, :p_tipo_liquido, :p_tipo_conexion, :p_senal_ruido, :p_potencia); END;');
+
+    // Vincular los parámetros
+    oci_bind_by_name($stmt, ':p_nombre', $nombre);
+    oci_bind_by_name($stmt, ':p_precio', $precio);
+    oci_bind_by_name($stmt, ':p_stock', $stock);
+    oci_bind_by_name($stmt, ':p_imagen', $imagen);
+    oci_bind_by_name($stmt, ':p_descripcion', $descripcion);
+    oci_bind_by_name($stmt, ':p_memoria', $memoria);
+    oci_bind_by_name($stmt, ':p_velocidad', $velocidad);
+    oci_bind_by_name($stmt, ':p_tipo_memoria', $tipo_memoria);
+    oci_bind_by_name($stmt, ':p_nucleos', $nucleos);
+    oci_bind_by_name($stmt, ':p_tipo_disco', $tipo_disco);
+    oci_bind_by_name($stmt, ':p_memoria_ram', $memoria_ram);
+    oci_bind_by_name($stmt, ':p_tamano', $tamano);
+    oci_bind_by_name($stmt, ':p_peso', $peso);
+    oci_bind_by_name($stmt, ':p_tipo_liquido', $tipo_liquido);
+    oci_bind_by_name($stmt, ':p_tipo_conexion', $tipo_conexion);
+    oci_bind_by_name($stmt, ':p_senal_ruido', $senal_ruido);
+    oci_bind_by_name($stmt, ':p_potencia', $potencia);
+
+    // Ejecutar el procedimiento
+    $result = oci_execute($stmt);
+    if (!$result) {
+        $e = oci_error($stmt);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }
+
+    // Cerrar la conexión
+    oci_free_statement($stmt);
+    oci_close($conn);
+
+    return $result;
+}
+
+   function get_productos_id($id_producto) {
+        
+        $conn = conectarOracle();
     
-    function login($user, $password)
-    {
-        $mysqli = connect_database();
-
-        $sql = "SELECT id_usuario FROM usuario WHERE user = ? 
-            AND password = ?";
-            
-        $sentencia = $mysqli->prepare($sql);
-        if(!$sentencia)
-        {
-            echo "Fallo en la preparación de la sentencia".$mysqli->errno;
-        }
-
-        $asignar = $sentencia->bind_param("ss", $user, $password);
-        if(!$asignar)
-        {
-            echo "Fallo en la asignación ".$mysqli->errno;
-        }
-
-        $ejecucion = $sentencia->execute();
-        if(!$ejecucion)
-        {
-            echo "Fallo en la ejecución ".$mysqli->errno;
-        }
-
-        $usuario = -1;
-        $vincular = $sentencia->bind_result($usuario);
-        if(!$vincular)
-        {
-            echo "Fallo al asociar parámetros ".$mysqli->errno;
-        }
-
-        $result = false;
-        if($sentencia->fetch())
-        {
-            $result = $usuario;
-        }
-
-        $mysqli->close();
-        return $result;
-    }
-
-    function registro($nombre, $apellido1, $apellido2, $dni, $direccion, $correo, $telefono, $usuario, $password)
-    {
-        $mysqli = connect_database();
-
-        $sql = "INSERT INTO registro(nombre, apellido1, apellido2, dni, direccion, correo, telefono,usuario, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-        $sentencia = $mysqli->prepare($sql);
-        if(!$sentencia)
-        {
-            echo "Fallo en la preparación de la sentencia".$mysqli->errno;
-        }
-
-        $asignar = $sentencia->bind_param("sssssssss", $nombre, $apellido1, $apellido2, $dni, $direccion, $correo, $telefono, $usuario, $password);
-        if(!$asignar)
-        {
-            echo "Fallo en la asignación ".$mysqli->errno;
-        }
-
-        $ejecucion = $sentencia->execute();
-        
-        if(!$ejecucion)
-        {
-            echo "Fallo en la ejecución ".$mysqli->errno;
+        if (!$conn) {
             return false;
-        } else {
-            return true;
         }
-
-        // $mysqli->close();
+        // Preparar la consulta
+        $query = "SELECT * FROM productos WHERE id_producto = :id_producto";
+        
+        $stid = oci_parse($conn, $query);
+        
+        // Asignar valor al parámetro :id_producto
+        oci_bind_by_name($stid, ':id_producto', $id_producto);
+        
+        // Ejecutar la consulta
+        oci_execute($stid);
+        
+        // Fetch resultados
+        $productos = array();
+        while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+        $articulo = array(
+        'ID_PRODUCTO' => $row['ID_PRODUCTO'],
+        'NOMBRE' => $row['NOMBRE'],
+        'PRECIO' => $row['PRECIO'],
+        'STOCK' => $row['STOCK'],
+        'IMAGEN' => $row['IMAGEN'],
+        'DESCRIPCION' => $row['DESCRIPCION'],
+        );
+    $productos[] = $articulo;
+}
+        oci_close($conn);
+        return $productos;
     }
 
-    function insert_articulos($nombre, $imagen, $descripcion, $precio, $id_usuario)
-    {
-        
-        $mysqli = connect_database();
-        
-        $sql = "INSERT INTO productos(id_producto, nombre, precio, stock, imagen, descripcion) 
-                        VALUES (?, ?, ?, ?, ?)";
-        $sentencia = $mysqli->prepare($sql);
-        if(!$sentencia)
-        {
-            echo "Fallo en la preparación de la sentencia: ".$mysqli->errno;
-        }
+    function busqueda($term) {
 
-        $asignar = $sentencia->bind_param("sssii", $nombre, $imagen, $descripcion, $precio, $id_usuario);
-        if(!$asignar)
-        {
-            echo "Fallo en la asignacion de parametros ".$mysqli->errno;
+        $conn = conectarOracle();
+
+        if (!$conn) {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }
-        
-        $ejecucion = $sentencia->execute();
-        if(!$ejecucion)
-        {
-            echo "Fallo en la ejecucion: ".$mysqli->errno;
-        }
-        
-        $mysqli->close();
-        return true;
-    }
     
+        // Preparar la consulta SQL para buscar artículos por nombre
+        $query = "SELECT * FROM productos WHERE nombre LIKE '%' || :term || '%'";
+    
+        // Preparar la sentencia
+        $stmt = oci_parse($conn, $query);
+    
+        // Vincular el parámetro del término de búsqueda
+        oci_bind_by_name($stmt, ":term", $term);
+    
+        // Ejecutar la consulta
+        oci_execute($stmt);
+    
+        // Obtener los resultados
+        $resultados = array();
+        while ($row = oci_fetch_assoc($stmt)) {
+            $resultados[] = $row;
+        }
+    
+        // Cerrar la conexión
+        oci_free_statement($stmt);
+        oci_close($conn);
+    
+        return $resultados;
+    }
 ?>

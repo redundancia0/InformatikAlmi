@@ -17,8 +17,23 @@ form img {
     margin: 0 auto;
 }
 
+.all {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.all label {
+    display: block;
+}
+
+.all input {
+    margin: 5px;
+    padding: 2px;
+    text-align: center;
+}
+
 form input {
-    margin: 0px auto;
+    margin: auto;
     width: 200px;
     height: 25px;
     text-align: center;

@@ -22,10 +22,12 @@ form input {
     width: 200px;
     height: 25px;
     text-align: center;
+    font-weight: bolder;
 }
 
 form label {
     text-align: center;
+    font-weight: bolder;
 }
 
 textarea {

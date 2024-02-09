@@ -17,11 +17,12 @@
     <h1>Iniciar Sesion</h1>
     <form method="post" action="loginVerificar.php">
         <img class="formLogo" src="img/logo.png">
-        <label for="user">Usuario</label>
-        <input type="text" id="user" name="user" required placeholder="Introduzca su usuario">
+        
+        <label for="USUARIOPROVEEDOR">Usuario</label>
+        <input type="text" id="USUARIOPROVEEDOR" name="USUARIOPROVEEDOR" required placeholder="Introduzca su usuario">
         <br>
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" name="password" required placeholder="Introduzca su contraseña">
+        <label for="PASSWORDPROVEEDOR">Contraseña</label>
+        <input type="password" id="PASSWORDPROVEEDOR" name="PASSWORDPROVEEDOR" required placeholder="Introduzca su contraseña">
         <br>
         <input type="submit" id="singup"></input>
     </form>

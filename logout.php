@@ -1,5 +1,5 @@
 <?php
     session_start();
-    unset($_SESSION["user"]);
+    unset($_SESSION["USUARIOPROVEEDOR"]);
     header("location: index.php");
 ?>

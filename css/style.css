@@ -1,10 +1,12 @@
 .container {
     display: flex;
+    flex-wrap: wrap;
+    flex: 1;
 }
 
 section {
-    border-radius: 50px;
-    background: radial-gradient(white, #5271ff );
+    border-radius: 10px;
+    background: radial-gradient(white, #5271ff);
     margin: 20px;
     padding: 20px;
     width: 400px;
@@ -35,4 +37,36 @@ span {
 
 h1 {
     text-align: center;
+}
+
+input {
+    width: 200px;
+}
+
+#toggleSearch {
+    margin: 20px;
+    cursor: pointer;
+}
+
+#searchInput {
+        height: 25px;
+}
+
+#toggleSearch img{
+    width: 30px;
+}
+
+#searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#imageContainer {
+    margin-right: 10px; 
+}
+
+#submit {
+    width: 50px;
+    height: 25px;
 }

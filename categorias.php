@@ -16,22 +16,41 @@
     </header>
     <article>
     <?php
-    include_once 'bbdd.php';
-    $articulos = get_articulos();
-    echo '<br>';
-    echo '<h1 class="titulo">Articulos Iniciales</h1>';
-    echo '<div class="container">';
-    foreach ($articulos as $articulo) {
+        include_once 'menu.php';
+    ?>
+    </header>
+    <?php
+include_once 'bbdd.php'; 
+$productos = selectProductos(); 
+// var_dump($articulos);
+
+echo '<br>';
+echo '<script src="buscador.js"></script>';
+echo '<form id="searchContainer" action="busqueda.php">';
+echo '  <div id="imageContainer"><a id="toggleSearch"><img src="img/lupa.png"></a></div>';
+echo '  <div id="searchInputContainer">';
+echo '    <input type="search" id="searchInput" name="term" placeholder="Buscar">';
+echo '<input type="submit" id="submit" placholder="Buscar">';
+echo '  </div>';
+echo '</form>';
+echo '<br>';
+echo '<h1 class="titulo">Articulos Iniciales</h1>';
+echo '<div class="container">';
+if ($productos !== false) {
+    foreach ($productos as $producto) {
         echo '<article>';
         echo '<section>';
-        echo '<a href="id_articulos.php?id_articulos='.$articulo["id_articulos"].'"><h2>' . $articulo['nombre'] . '</h2></a>';
+        echo '<a href="id_articulos.php?id_producto='.$producto["ID_PRODUCTO"].'"><h2>' . $producto['NOMBRE'] . '</h2></a>';
         echo '<br>';
-        echo '<img src="' . $articulo['imagen'] . '" alt="fotoNoticia"><br>';
-        echo '<span>'.$articulo['precio'].'€</span>';
+        echo '<img src="' . $producto['IMAGEN'] . '" alt="fotoNoticia"><br>';
+        echo '<span>'.$producto['PRECIO'].'€</span>';
         echo '</section>';
         echo '</article>';
     }
-    echo "</div>";
+} else {
+    echo "No se pudieron recuperar los productos.";
+}
+echo "</div>";
 ?>
     </article>
     <footer>

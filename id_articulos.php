@@ -15,21 +15,26 @@
     </header>
     <?php
         include_once 'bbdd.php';
-        if(isset($_GET['id_articulos'])) {
-        $id_articulos = $_GET['id_articulos'];
-    
-        $articulos = get_articulos_id($id_articulos);
-        
+        if(isset($_GET['id_producto'])) {
+            $id_producto = $_GET['id_producto'];
+            // echo $id_producto;
+            $productos = get_productos_id($id_producto);
+            if(!empty($productos))
+            $producto = $productos[0];
             echo '<article>';
             echo '<section>';
-            echo '<h1>' . $articulos['nombre'] . '</h1>';
+            echo '<h1>' . $producto['NOMBRE'] . '</h1>';
             echo '<br>';
-            echo '<img src="' . $articulos['imagen'] . '" alt="fotoArticulo"><br>';
-            echo '<p>' . $articulos['descripcion'] . '</p>';
-            echo '<span>'. $articulos['precio'] . '€</span>';
+            echo '<img src="' . $producto['IMAGEN'] . '" alt="fotoArticulo"><br>';
+            echo '<span>'. $producto['PRECIO'] . '€</span>';
+            echo '<p> Stock: ' . $producto['STOCK'] . '</p>';
+            echo '<p>' . $producto['DESCRIPCION'] . '</p>';
             echo '</section>';
             echo '</article>';
+        } else {
+            echo 'No se encontraron productos con el ID especificado.';
         }
+        
 ?>
     <footer>
         <a href="https://www.instagram.com/"><img src="img/insta.png" alt="fotoInsta"></a>
